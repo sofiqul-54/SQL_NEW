@@ -139,19 +139,7 @@ Gietz                     AC_ACCOUNT       8300
 Islam                     AC_ACCOUNT      45000                                 
 
 108 rows selected.
-
-SQL> select * from job_grades;
-select * from job_grades
-              *
-ERROR at line 1:
-ORA-00942: table or view does not exist 
-
-
-SQL> select * from job;
-select * from job
-              *
-ERROR at line 1:
-ORA-04044: procedure, function, package, or type is not allowed here 
+ 
 
 
 SQL> select table_name from user_tables;
@@ -877,39 +865,6 @@ SQL> describe employees;
  MANAGER_ID                                         NUMBER(6)
  DEPARTMENT_ID                                      NUMBER(4)
 
-SQL> select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||depatrtment_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||depatrtment_id THE_OUTPUT from employees
-                                                 *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
-
-
-SQL> select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||department_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||department_id THE_OUTPUT from employees
-                                                 *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
-
-
-SQL> select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||department_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||department_id THE_OUTPUT from employees
-                                                 *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
-
-
-SQL> select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||DEPARTMENT_ID THE_OUTPUT from employees;
-select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||DEPARTMENT_ID THE_OUTPUT from employees
-                                                 *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
-
-
-SQL> select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id THE_OUTPUT from employees
-                                                 *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
 
 
 SQL> select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id THE_OUTPUT from employees;
@@ -1054,25 +1009,8 @@ THE_OUTPUT
 
 108 rows selected.
 
-SQL> select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','department_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','department_id THE_OUTPUT from employees
-                                                                                                                                                                                     *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
 
 
-SQL> select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||',||'department_id THE_OUTPUT from employees;
-select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||',||'department_id THE_OUTPUT from employees
-                                                                                                                                                                                       *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
-
-
-SQL> select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||',||'department_id THE_OoUTPUT from employees;
-select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||',||'department_id THE_OoUTPUT from employees
-                                                                                                                                                                                       *
-ERROR at line 1:
-ORA-00923: FROM keyword not found where expected 
 
 
 SQL> select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||hire_date||','||job_id||','||salary||','||commission_pct||','||manager_id||','||department_id THE_OUTPUT from employees;
@@ -1248,11 +1186,6 @@ LAST_NAME                 DEPARTMENT_ID
 ------------------------- -------------                                         
 Taylor                               80                                         
 
-SQL> select last_name, salary from emplyees where salary not between 5000 and 12000;
-select last_name, salary from emplyees where salary not between 5000 and 12000
-                              *
-ERROR at line 1:
-ORA-00942: table or view does not exist 
 
 
 SQL> select last_name, salary from employees where salary not between 5000 and 12000;
@@ -1335,25 +1268,6 @@ Islam                          45000
 
 58 rows selected.
 
-SQL> select last_name, job_id, hire_date from employees where last_name('matos','Taylor') order by hire_date;
-select last_name, job_id, hire_date from employees where last_name('matos','Taylor') order by hire_date
-                                                                                     *
-ERROR at line 1:
-ORA-00920: invalid relational operator 
-
-
-SQL> select last_name, job_id, hire_date from employees where last_name('matos','Taylor') ORDER BY hire_date;
-select last_name, job_id, hire_date from employees where last_name('matos','Taylor') ORDER BY hire_date
-                                                                                     *
-ERROR at line 1:
-ORA-00920: invalid relational operator 
-
-
-SQL> select last_name, job_id, hire_date from employees where last_name('Matos','Taylor') ORDER BY hire_date;
-select last_name, job_id, hire_date from employees where last_name('Matos','Taylor') ORDER BY hire_date
-                                                                                     *
-ERROR at line 1:
-ORA-00920: invalid relational operator 
 
 
 SQL> select last_name, job_id, hire_date from employees where last_name in ('Matos','Taylor') ORDER BY hire_date;
@@ -1437,18 +1351,6 @@ Weiss                                50
 
 47 rows selected.
 
-SQL> select last_name, department_id from employees where department_id in (20, 50) order by last_name dsc;
-select last_name, department_id from employees where department_id in (20, 50) order by last_name dsc
-                                                                                                  *
-ERROR at line 1:
-ORA-00933: SQL command not properly ended 
-
-
-SQL> select last_name, department_id from employees where department_id in (20, 50) order by last_name DSC;
-select last_name, department_id from employees where department_id in (20, 50) order by last_name DSC
-                                                                                                  *
-ERROR at line 1:
-ORA-00933: SQL command not properly ended 
 
 
 SQL> select last_name, department_id from employees where department_id in (20, 50) order by last_name DESC;
@@ -1530,11 +1432,6 @@ Fay                                 6000
 
 6 rows selected.
 
-SQL> select last_name, hire_date from employees where hire_date like %94;
-select last_name, hire_date from employees where hire_date like %94
-                                                                *
-ERROR at line 1:
-ORA-00911: invalid character 
 
 
 SQL> select last_name, hire_date from employees where hire_date like '%94';
@@ -2450,12 +2347,6 @@ Kumar                           6100             .1
 
 35 rows selected.
 
-SQL> select last_name, salary, commission_pct from employees where commission_pct is not null order by (salary, commission_pct) desc;
-select last_name, salary, commission_pct from employees where commission_pct is not null order by (salary, commission_pct) desc
-                                                                                                         *
-ERROR at line 1:
-ORA-00907: missing right parenthesis 
-
 
 SQL> select last_name, salary, commission_pct from employees where commission_pct is not null order by salary desc, commission_pct desc;
 
@@ -2508,11 +2399,7 @@ Kumar                           6100             .1
 
 35 rows selected.
 
-SQL> select last_name, salary from employees where salary is 12000;
-select last_name, salary from employees where salary is 12000
-                                                        *
-ERROR at line 1:
-ORA-00908: missing NULL keyword 
+
 
 
 SQL> select last_name, salary from employees where salary=12000;
@@ -2521,14 +2408,7 @@ LAST_NAME                     SALARY
 ------------------------- ----------                                            
 Errazuriz                      12000                                            
 
-SQL> select last_name salary from employees where salary>&sal_amt;
-Enter value for sal_amt: 10000;
-old   1: select last_name salary from employees where salary>&sal_amt
-new   1: select last_name salary from employees where salary>10000;
-select last_name salary from employees where salary>10000;
-                                                         *
-ERROR at line 1:
-ORA-00911: invalid character 
+
 
 
 SQL> select last_name salary from employees where salary>&sal_amt;

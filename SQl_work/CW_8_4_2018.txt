@@ -49,11 +49,7 @@ SQL> describe employees
  MANAGER_ID                                         NUMBER(6)
  DEPARTMENT_ID                                      NUMBER(4)
 
-SQL> select destinct job_id from employees;
-select destinct job_id from employees
-       *
-ERROR at line 1:
-ORA-00904: "DESTINCT": invalid identifier 
+ 
 
 
 SQL> select distinct job_id from employees;
