@@ -1,0 +1,30 @@
+====================Create Index==================
+create index emp_last_name_idx
+on 	employees(last_name);
+
+================Show Indexes===================
+select index_name from user_indexes;
+
+=================Removing an Index==================
+drop index emp_last_name_idx;
+
+
+===============Create Table========================
+create table test(
+	id 	number(3) primary key,
+	name 	varchar2(20) not null
+	); 
+
+create sequence test_id_seq
+	increment by 10
+	start with 100
+	maxvalue 999
+	nocache
+	nocycle;
+
+insert into test(id, name) values(test_id_seq.nextval, 'Mostafiz');
+
+===================Create Sequence=================
+create synonym mostafiz$syn for test;
+
+select * from mostafiz$syn;

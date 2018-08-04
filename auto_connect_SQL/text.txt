@@ -1,0 +1,21 @@
+SQL> connect
+Enter user-name: system
+Connected.
+SQL> connect
+Enter user-name: msi
+Connected.
+SQL> select table_name from user_names;
+select table_name from user_names
+                       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> select table_name from user_name;
+select table_name from user_name
+                       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> spool off

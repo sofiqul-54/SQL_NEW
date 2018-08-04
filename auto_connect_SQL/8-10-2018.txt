@@ -1,0 +1,4 @@
+SQL> connect
+Enter user-name: hr
+Connected.
+SQL> spool off

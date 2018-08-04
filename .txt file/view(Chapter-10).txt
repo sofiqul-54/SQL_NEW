@@ -1,0 +1,20 @@
+creating a view (Page : 10-8):
+	create view empview 
+		As select employee_id, last_name, salary from employees where department_id=80;
+
+=========================**************************==================================
+creating a view (Page : 10-9):
+	create view salvu50
+		As select 	 	employee_id ID_NUMBER, last_name NAME, salary*12 ANN_SALARY
+			from 	employees 
+			where 	department_id=50;
+
+=========================**************************==================================
+creating a complex view (Page : 10-12):
+	create or replace view dep_sum_vu
+			(name, min_salary, max_salary, avg_salary)			
+	As select 		d.department_name, min(e.salary), max(e.salary), avg(e.salary)
+	from 		employees e join departments d
+	on 		(e.department_id = d.department_id)
+	group by d.department_name;
+

@@ -1,0 +1,38 @@
+create sequence dep_depid_seq
+		start with 50
+		increment by 10
+		maxvalue 100
+		nocache
+		NOCYCLE;
+
+create sequence epm_empid_seq
+		start with 1
+		increment by 5
+		maxvalue 200
+		nocache
+		NOCYCLE;
+
+create table dep(
+	id 	number(3) primary key,
+	name 	varchar2(20) not null
+	) ;
+
+insert into dep(id, name) values(dep_depid_seq.nextval, 'Admin');
+insert into dep(id, name) values(dep_depid_seq.nextval, 'Director');
+insert into dep(id, name) values(dep_depid_seq.nextval, 'Manager');
+
+create table emp(
+	id 	number(3) primary key,
+	name 	varchar2(20) not null,
+	salary 	number(7,2) check(salary<5000),
+	mobile 	varchar2(20) unique,
+	dep_id 	number(3), constraint dep_emp_fk FOREIGN KEY (dep_id) REFERENCES dep(id)
+	);
+
+alter table emp modify(salary number(7,2) check(salary<50000));
+
+insert into emp(id, name, salary, mobile, dep_id) values(epm_empid_seq.nextval, 'Karim', 45000, 01748-507000, 50 );
+
+for update row: update dep set name='GM' where id=50;
+
+

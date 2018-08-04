@@ -1,0 +1,26 @@
+create table teacher(
+	t_id 		number(2) primary key,
+	t_name 		varchar2(20) not null,
+	salary 		number(7,2) check(salary>50000),
+	mobile 		number(11) unique,
+	joining_date 	date default SYSDATE
+	);
+
+insert into teacher(t_id, t_name, salary, mobile) values(10, 'Md. Rajaul Islam', 99000.59, 01796794594);
+insert into teacher(t_id, t_name, salary, mobile) values(11, 'Fatema Mostafa', 55000.59, 01797794594);
+
+create table student(
+	Id 		number(2) primary key,
+	name 		varchar2(20) not null,
+	education_Q 	varchar2(30) not null,
+	district 		varchar2(20) unique,
+	teacher_id 	number(2), constraint tea_stu_fk foreign key (teacher_id) references teacher(t_id)
+	);
+insert into student(id, name, education_Q, district, teacher_id) values(51, 'Mehedee Hassan', 'Bsc Hons', 'Comilla', 10);
+insert into student(id, name, education_Q, district, teacher_id) values(52, 'Wadud Azad', 'BBA', 'Chandpur', 10);
+insert into student(id, name, education_Q, district, teacher_id) values(53, 'Mostafizur Rahman', 'BBA', 'Tangail', 10);
+insert into student(id, name, education_Q, district, teacher_id) values(54, 'Sofiqul Islam', 'MBS', 'Barisahal', 10);
+insert into student(id, name, education_Q, district, teacher_id) values(55, 'GM Mortuza', 'MBA', 'Jessor', 11);
+
+create or replace view stview01 As select s.id, s.name, t.t_name from student s, teacher t where t.t_id=s.id;
+create view stview_02 As select s.id, s.name, t.t_name from student s, teacher t where t.t_id=11;

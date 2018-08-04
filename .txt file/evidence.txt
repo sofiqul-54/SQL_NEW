@@ -1,0 +1,164 @@
+1.
+=================Ctreate New User===============
+
+SQL> connect
+Enter user-name: system
+Enter password:
+Connected.
+SQL> create user eid identified by eid;
+
+User created.
+
+SQL> grant dba to eid;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: eid
+Enter password:
+Connected.
+
+2. (A)
+=======================Create department Table=========================
+
+create table department(dep_id number(3) primary key, department_name varchar2(20) not null);
+
+
+
+2. (B)
+=======================Create EmployeeTable=========================
+create table employee(
+	emp_id 		number(4) primary key,
+	emp_name 	varchar2(20) not null,
+	mobile 		varchar2(20) unique not null,
+	salary 		number(7,2) check(salary > 10000),
+	joining_date 	date default SYSDATE,
+	country 		varchar2(20) default  'BD',
+	dep_id 		number(3), constraint dep_emp_fk FOREIGN KEY (dep_id) REFERENCES department(dep_id)
+	);
+
+2. (C)
+=============================Describe Table======================
+describe department;
+describe employee;
+
+
+3. (A)
+========================Sequence for department table=============
+create sequence dep_id_seq
+	start with 100
+	increment by 10
+	maxvalue 999
+	minvalue 100
+	nocycle
+	nocache;
+
+3. (B)
+========================Sequence for employee table=============
+create sequence emp_id_seq
+	start with 1
+	increment by 5
+	maxvalue 999
+	minvalue 1
+	nocycle
+	nocache;
+
+3. (C)
+=================show sequence======================
+select sequence_name from user_sequences;
+
+4.(A)
+========================show index==================
+select index_name from user_indexes;
+
+4.(B)
+====================create index column depart_name===============
+create index dep_name_idx on department(department_name);
+
+4. (C)
+========================show index again==================
+select index_name from user_indexes;
+
+4. (D)
+========================insert 3 data department table===================
+insert into department(dep_id, department_name) values(dep_id_seq.nextval, 'Admin');
+insert into department(dep_id, department_name) values(dep_id_seq.nextval, 'Software');
+insert into department(dep_id, department_name) values(dep_id_seq.nextval, 'Marketing');
+
+
+4. (E)
+======================Create View Department Table===================
+create view depv as select dep_id, department_name from department;
+
+
+4. (F)
+======================Show  View List===================
+select view_name from user_views;
+
+4.(G)
+========================create synonym=============
+(i)
+create synonym dep_syn for department;
+
+(ii) 	
+create synonym depv_syn for depv;
+
+4.(H)
+=====================retrive data from view, 
+
+
+5 (A)
+==================show index==============
+select index_name from user_indexes;
+
+5. (B) 
+==========================create index column emp_name===============
+create index emp_idx on employee(emp_name);
+
+5. (C)
+==================show index again==============
+select index_name from user_indexes;
+
+5. (D)
+=======================insert 5 data employee table=================
+insert into employee(emp_id, emp_name, mobile, salary, joining_date, country, dep_id) values(emp_id_seq.nextval, 'Azad', '01748-567000', 20000, '20-Jun-2014', 'Pakistan', 100);
+insert into employee(emp_id, emp_name, mobile, salary,country, dep_id) values(emp_id_seq.nextval, 'Mehedee', '01768-567000', 30000, 'India', 110);
+insert into employee(emp_id, emp_name, mobile, salary, dep_id) values(emp_id_seq.nextval, 'GM Mortuza', '01768-569000', 50000, 120);
+insert into employee(emp_id, emp_name, mobile, salary, joining_date, country, dep_id) values(emp_id_seq.nextval, 'Zobayer', '01748-567500', 90000, '20-Jun-2074', 'Bangladesh', 100);
+insert into employee(emp_id, emp_name, mobile, salary,country, dep_id) values(emp_id_seq.nextval, 'Arefin', '01768-567005', 99000, 'Bangladesh', 110);
+
+5.(E)
+=============================view employee table=======================
+create view empv as select emp_id, emp_name, mobile, salary, joining_date, country, dep_id from employee;
+
+5.(F)
+==========================show view list===================
+select view_name from user_views;
+
+5. (G)
+========================create synonym=============
+(i)
+create synonym emp_syn for employee;
+
+(ii) 	
+create synonym empv_syn for empv;
+
+5. (H)
+====================================retrive data from view, table synonym and view synoym===================
+
+
+
+6. (A)
+===============update marketing to sales===============
+update department set department_name='sales' where dep_id=120;
+
+6. (B) 
+===============add a new column at employee tables like email enique==============
+alter table employee add email varchar2(30) unique;
+
+6. (C)
+===============update first row employee table like sales==============
+update employee set dep_id=120 where emp_id=1;
+
+
+

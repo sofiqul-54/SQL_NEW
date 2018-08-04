@@ -1,0 +1,41 @@
+create table students(
+	id		 number(7) primary key,
+	First_Name 	varchar2 (15) not null,
+	Last_Name 	varchar2 (15) not null,
+	status 		varchar2 (15) not null,
+	Monthly_Salary 	number(7,2),
+	email 		varchar2 (20) not null,
+	phone_number 	number (11) unique,
+	join_date 	date,
+	end_date 	date,
+	city 		varchar2 (15));
+
+insert into students(id, First_Name, Last_Name, status, Monthly_Salary, email, phone_number, join_date, city) values(1244633, 'Mst Rojina', 'Akter', 'Active', 5000.00, 'rojina@gmail.com', 01714561354, '25-jul-2017', 'Narayangonj');
+insert into students(id, First_Name, Last_Name, status, Monthly_Salary, email, phone_number, join_date, end_date, city) 
+values(1244643, 'Wadud', 'Azad', 'Active', 6000.00, 'azad@gmail.com', 01714561004, '25-jul-2016', '25-jul-2018', 'Dcreat haka');
+
+create table departments(
+		dep_id 		number(5) primary key,
+		dep_name 	varchar2 (15) not null unique);
+
+insert into departments(dep_id, dep_name) values(10, 'Acconting');
+insert into departments(dep_id, dep_name) values(20, 'Management');
+insert into departments(dep_id, dep_name) values(30, 'Marketing');
+insert into departments(dep_id, dep_name) values(40, 'Math');
+insert into departments(dep_id, dep_name) values(50, 'English');
+
+
+create table student(
+	id 		number(7) primary key,
+	First_Name 	varchar2 (15) not null,
+	Last_Name 	varchar2 (15) not null,
+	status 		varchar2 (15) not null,
+	email 		varchar2 (20) not null,
+	phone_number 	number (11) unique,
+	city 		varchar2 (15),
+	department_id 	number(5), constraint stu_dep_fk foreign key (department_id) REFERENCES departments(dep_id));
+
+insert into student(id, First_name, Last_name, status, email, phone_number, city, department_id) values(101, 'Wadud', 'Azad', 'Active', 'azad@gmail.com', 01974568124, 'Chandpur', 10);
+insert into student(id, First_name, Last_name, status, email, phone_number, city, department_id) values(103, 'GM', 'Mortuza', 'Active', 'mortuza@gmail.com', 01554942167, 'Jessor', 20);
+
+

@@ -1,0 +1,59 @@
+create table country(
+		c_id 		number(5) primary key,
+		country_name 	varchar2(20) not null
+		);
+
+insert into country(c_id, country_name) values(10, 'Bangladesh');
+insert into country(c_id, country_name) values(20, 'Tasmania');
+insert into country(c_id, country_name) values(30, 'India');
+
+-------------------***************-------------------------------
+create table division(
+		div_id 		number(5) primary key,
+		div_name 	varchar2(20) not null,
+		country_id 	number(5), constraint coun_divi_fk FOREIGN KEY(country_id) REFERENCES country(c_id) 
+		);
+
+insert into division(div_id, div_name,country_id) values(101, 'Dhaka', 10);
+insert into division(div_id, div_name,country_id) values(102, 'Chattagram', 10);
+insert into division(div_id, div_name,country_id) values(103, 'Rajshahi', 10);
+insert into division(div_id, div_name,country_id) values(104, 'Khulna', 10);
+insert into division(div_id, div_name,country_id) values(105, 'Barishal', 10);
+insert into division(div_id, div_name,country_id) values(106, 'Sylhet', 10);
+insert into division(div_id, div_name,country_id) values(107, 'miena',20);
+insert into division(div_id, div_name,country_id) values(108, 'Boyhwell',20);
+insert into division(div_id, div_name,country_id) values(109, 'Ross',20);
+insert into division(div_id, div_name,country_id) values(110, 'Kolkata',30);
+insert into division(div_id, div_name,country_id) values(111, 'Rajhsthan',30);
+
+-------------------***************-------------------------------
+
+select d.div_id,d.div_name,c.country_name from division d, country c where d.country_id=c.c_id;
+
+
+-------------------***************-------------------------------
+create table district(
+		dis_id 		number(5) primary key,
+		dis_name 	varchar2(20) not null,
+		div_id 		number(5), constraint div_dis_fk FOREIGN KEY(div_id) REFERENCES division(div_id),
+		country_id 	number(5), constraint cou_divs_fk FOREIGN KEY(country_id) REFERENCES country(c_id)
+		);
+
+insert into district(dis_id, dis_name, div_id, country_id) values(201, 'Dhaka', 101, 10);
+insert into district(dis_id, dis_name, div_id, country_id) values(202, 'Gazipur', 101, 10);
+insert into district(dis_id, dis_name, div_id, country_id) values(203, 'Chattagram', 102, 10);
+insert into district(dis_id, dis_name, div_id, country_id) values(203, 'Noakhali', 102, 10);
+-------------------***************-------------------------------
+
+-------------------***************-------------------------------
+
+create table thana(
+		t_id 		number(5) primary key,
+		t_name 		varchar2(20) not null,
+		div_id 		number(5), constraint divi_coun_fk FOREIGN KEY(div_id) REFERENCES division(div_id),
+		country_id 	number(5), constraint cou_div_fk FOREIGN KEY(country_id) REFERENCES country(c_id)
+		);
+
+insert into thana(t_id, t_name, div_id, country_id) values(201, 'Kotwaly', 101, 10);
+insert into thana(t_id, t_name, div_id, country_id) values(202, 'Ramna', 101, 10);
+insert into thana(t_id, t_name, div_id, country_id) values(202, 'Ramna', 101, 10);
