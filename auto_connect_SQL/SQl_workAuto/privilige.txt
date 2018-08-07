@@ -1,0 +1,69 @@
+SQL> connect
+Enter user-name: 
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+SQL> CONNECT SYS as SYSDBA
+Connected.
+SQL> create user xyz identified by xyz;
+
+User created.
+
+SQL> grant create session to xyz;
+
+Grant succeeded.
+
+SQL> grant create table to xyz;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: xyx
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect
+Enter user-name: xyz
+Connected.
+SQL> create table test (id number, name varchar2);
+create table test (id number, name varchar2)
+                                           *
+ERROR at line 1:
+ORA-00906: missing left parenthesis 
+
+
+SQL> create table test (id number, name varchar2(15));
+create table test (id number, name varchar2(15))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM' 
+
+
+SQL> CONNECT SYS as SYSDBA
+Connected.
+SQL> alter user xyz quota 50m on system;
+
+User altered.
+
+SQL> connect
+Enter user-name: xyx
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect
+Enter user-name: xyz
+Connected.
+SQL> create table test (id number, name varchar2(15));
+
+Table created.
+
+SQL> insert into test(id, name) values(101, 'Wadud');
+
+1 row created.
+
+SQL> spool off
