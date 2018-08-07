@@ -1,0 +1,80 @@
+SQL> show user;
+USER is "XYZ"
+SQL> update test set name='Mostafiz' where id=101;
+
+1 row updated.
+
+SQL> select * from test;
+
+        ID NAME                                                                 
+---------- ---------------                                                      
+       101 Mostafiz                                                             
+
+SQL> connect
+Enter user-name: 
+ERROR:
+ORA-01017: invalid username/password; logon denied 
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> 
+SQL> connect sys as sysdba
+Connected.
+SQL> create role manager;
+
+Role created.
+
+SQL> grant create session, create table to manager;
+
+Grant succeeded.
+
+SQL> grant manager to xyz;
+
+Grant succeeded.
+
+SQL> grant manager to xyz2;
+grant manager to xyz2
+                 *
+ERROR at line 1:
+ORA-01917: user or role 'XYZ2' does not exist 
+
+
+SQL> create user xyz2 identified by xyz2;
+
+User created.
+
+SQL> grant manager to xyz2;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: xyz2
+Connected.
+SQL> create table test (id number, name varchar2(15));
+create table test (id number, name varchar2(15))
+*
+ERROR at line 1:
+ORA-01950: no privileges on tablespace 'SYSTEM' 
+
+
+SQL> CONNECT SYS as SYSDBA
+Connected.
+SQL> alter userxyz2 quota 50m on system;
+alter userxyz2 quota 50m on system
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command 
+
+
+SQL> alter user xyz2 quota 50m on system;
+
+User altered.
+
+SQL> connect
+Enter user-name: xyz2
+Connected.
+SQL> create table test (id number, name varchar2(15));
+
+Table created.
+
+SQL> spool off
