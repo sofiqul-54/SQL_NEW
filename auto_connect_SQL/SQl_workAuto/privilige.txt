@@ -1,7 +1,4 @@
-SQL> connect
-Enter user-name: 
-ERROR:
-ORA-01017: invalid username/password; logon denied 
+
 
 
 SQL> CONNECT SYS as SYSDBA
@@ -18,21 +15,11 @@ SQL> grant create table to xyz;
 
 Grant succeeded.
 
-SQL> connect
-Enter user-name: xyx
-ERROR:
-ORA-01017: invalid username/password; logon denied 
 
 
-Warning: You are no longer connected to ORACLE.
 SQL> connect
 Enter user-name: xyz
 Connected.
-SQL> create table test (id number, name varchar2);
-create table test (id number, name varchar2)
-                                           *
-ERROR at line 1:
-ORA-00906: missing left parenthesis 
 
 
 SQL> create table test (id number, name varchar2(15));
@@ -48,13 +35,6 @@ SQL> alter user xyz quota 50m on system;
 
 User altered.
 
-SQL> connect
-Enter user-name: xyx
-ERROR:
-ORA-01017: invalid username/password; logon denied 
-
-
-Warning: You are no longer connected to ORACLE.
 SQL> connect
 Enter user-name: xyz
 Connected.
