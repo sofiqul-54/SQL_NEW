@@ -1,0 +1,43 @@
+connect sys as sysdba;
+
+========================create role_1============================= 
+create role oracle_role1;
+grant create table, create view, create sequence to oracle_role1;
+grant oracle_role1 to oracle1; 
+
+========================create role_2============================= 
+create role oracle_role1;
+grant create table, create view, create sequence to oracle_role1;
+grant oracle_role1 to oracle2; 
+
+=========================create user 1=========================
+create user oracle1 identified by 123;
+grant create session to oracle1;
+alter user oracle1 quota 500m on system;
+
+=========================create user 2=========================
+create user oracle2 identified by 123;
+grant create session to oracle2;
+alter user oracle2 quota 500m on system;
+
+==================copying data from another table_oracle 1=================
+grant select on hr.departments to oracle1;
+create table departments as select * from hr.departments;
+
+grant select on hr.employees to oracle1;
+create table employees as select * from hr.employees;
+
+==================copying data from another table_oracle 2=================
+grant select on hr.departments to oracle2;
+create table department as select * from hr.departments;
+
+grant select on hr.employees to oracle2;
+create table employees as select * from hr.employees;
+
+grant select on hr.locations to oracle2;
+create table locations as select * from hr.locations;
+
+==========================insert & update permission for oracle1==================
+grant select, insert, update (department_id)on oracle2.employees to oracle1;
+update oracle2.employees set department_id=80 where employee_id=100;
+
