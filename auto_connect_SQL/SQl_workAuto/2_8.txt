@@ -1,0 +1,146 @@
+SQL> alter table test set unused mobile;
+alter table test set unused mobile
+                            *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> alter table test set unused column mobile;
+
+Table altered.
+
+SQL> describe test;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                      NOT NULL VARCHAR2(30)
+
+SQL> select * from all_unused_col_tabs;
+
+OWNER                          TABLE_NAME                          COUNT        
+------------------------------ ------------------------------ ----------        
+MSI                            TEST                                    1        
+
+SQL> describe employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(2)
+ NAME                                      NOT NULL VARCHAR2(15)
+ CREATE_DATE                                        DATE
+
+SQL> describe SEQTAB;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                               VARCHAR2(30)
+
+SQL> describe test;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(3)
+ NAME                                      NOT NULL VARCHAR2(30)
+
+SQL> select * from departments;\
+  2  
+SQL> select * from departments;
+
+    DEP_ID DEP_NAME                                                             
+---------- ---------------                                                      
+        10 Acconting                                                            
+        20 Management                                                           
+        30 Marketing                                                            
+        40 Math                                                                 
+        50 English                                                              
+
+SQL> select * from students;
+
+        ID FIRST_NAME      LAST_NAME       STATUS          MONTHLY_SALARY       
+---------- --------------- --------------- --------------- --------------       
+EMAIL                PHONE_NUMBER JOIN_DATE END_DATE  CITY                      
+-------------------- ------------ --------- --------- ---------------           
+   1244633 Mst Rojina      Akter           Active                    5000       
+rojina@gmail.com       1714561354 25-JUL-17           Narayangonj               
+                                                                                
+   1244643 Wadud           Azad            Active                    6000       
+azad@gmail.com         1714561004 25-JUL-16 25-JUL-18 Dhaka                     
+                                                                                
+
+SQL> alter table students add constraint dep_stu_fk foreign key(dep_id) references departments on delete cascade;
+alter table students add constraint dep_stu_fk foreign key(dep_id) references departments on delete cascade
+                                                           *
+ERROR at line 1:
+ORA-00904: "DEP_ID": invalid identifier 
+
+
+SQL> describe students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(7)
+ FIRST_NAME                                NOT NULL VARCHAR2(15)
+ LAST_NAME                                 NOT NULL VARCHAR2(15)
+ STATUS                                    NOT NULL VARCHAR2(15)
+ MONTHLY_SALARY                                     NUMBER(7,2)
+ EMAIL                                     NOT NULL VARCHAR2(20)
+ PHONE_NUMBER                                       NUMBER(11)
+ JOIN_DATE                                          DATE
+ END_DATE                                           DATE
+ CITY                                               VARCHAR2(15)
+
+SQL> describe departments;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ DEP_ID                                    NOT NULL NUMBER(5)
+ DEP_NAME                                  NOT NULL VARCHAR2(15)
+
+SQL>  alter table students add(dep_id number(5));
+
+Table altered.
+
+SQL> alter table students add constraint dep_stu_fk foreign key(dep_id) references departments on delete cascade;
+
+Table altered.
+
+SQL> describe students;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(7)
+ FIRST_NAME                                NOT NULL VARCHAR2(15)
+ LAST_NAME                                 NOT NULL VARCHAR2(15)
+ STATUS                                    NOT NULL VARCHAR2(15)
+ MONTHLY_SALARY                                     NUMBER(7,2)
+ EMAIL                                     NOT NULL VARCHAR2(20)
+ PHONE_NUMBER                                       NUMBER(11)
+ JOIN_DATE                                          DATE
+ END_DATE                                           DATE
+ CITY                                               VARCHAR2(15)
+ DEP_ID                                             NUMBER(5)
+
+SQL> insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive', 30000, '01649-4578111', 10);
+insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive', 30000, '01649-4578111', 10)
+                                                                                                *
+ERROR at line 1:
+ORA-00947: not enough values 
+
+
+SQL> insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive','hjshjs@gmail.com' 30000, 01644578111, 10);
+insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive','hjshjs@gmail.com' 30000, 01644578111, 10)
+                                                                                                                                                                *
+ERROR at line 1:
+ORA-00917: missing comma 
+
+
+SQL> insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive','hjshjs@gmail.com', 30000, 01644578111, 10);
+insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'inactive','hjshjs@gmail.com', 30000, 01644578111, 10)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'active','hjshjs@gmail.com', 30000, 01644578111, 10);
+insert into syudents(ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id) values(1244954, 'aman', 'khalid', 'active','hjshjs@gmail.com', 30000, 01644578111, 10)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> spool off

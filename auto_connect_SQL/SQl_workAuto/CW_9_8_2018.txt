@@ -1,0 +1,94 @@
+SQL> connect
+Enter user-name: system
+Connected.
+SQL> show user
+USER is "SYSTEM"
+SQL>  select USERNAME, DEFAULT_TABLESPACE from DBA_USERS;
+
+USERNAME                       DEFAULT_TABLESPACE                               
+------------------------------ ------------------------------                   
+RAJ                            SYSTEM                                           
+USA                            SYSTEM                                           
+MSI                            SYSTEM                                           
+XYZ2                           SYSTEM                                           
+XYZ                            SYSTEM                                           
+EID                            SYSTEM                                           
+ORACLE2                        SYSTEM                                           
+IDB                            SYSTEM                                           
+USER1                          SYSTEM                                           
+EID2                           SYSTEM                                           
+USER2                          SYSTEM                                           
+
+USERNAME                       DEFAULT_TABLESPACE                               
+------------------------------ ------------------------------                   
+RUSSIA                         SYSTEM                                           
+ORACLE1                        SYSTEM                                           
+SYS                            SYSTEM                                           
+SYSTEM                         SYSTEM                                           
+ANONYMOUS                      SYSAUX                                           
+HR                             USERS                                            
+APEX_PUBLIC_USER               SYSTEM                                           
+FLOWS_FILES                    SYSAUX                                           
+APEX_040000                    SYSAUX                                           
+ORACLE_OCM                     SYSTEM                                           
+XS$NULL                        SYSTEM                                           
+
+USERNAME                       DEFAULT_TABLESPACE                               
+------------------------------ ------------------------------                   
+OUTLN                          SYSTEM                                           
+DIP                            SYSTEM                                           
+MDSYS                          SYSAUX                                           
+DBSNMP                         SYSAUX                                           
+APPQOSSYS                      SYSAUX                                           
+CTXSYS                         SYSAUX                                           
+XDB                            SYSAUX                                           
+
+29 rows selected.
+
+SQL> connect
+Enter user-name: msi
+Connected.
+SQL> select table_name from user_tables;
+
+TABLE_NAME                                                                      
+------------------------------                                                  
+EMPLOYEES                                                                       
+EMPLOYEE                                                                        
+STUDENTS                                                                        
+DEPARTMENTS                                                                     
+STUDENT                                                                         
+SEQTAB                                                                          
+
+6 rows selected.
+
+SQL> describe employees;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ID                                        NOT NULL NUMBER(11)
+ NAME                                      NOT NULL VARCHAR2(255)
+ SALARY                                             NUMBER(7,2)
+
+SQL> create table test(id number(3) primary key, name varchar2(30) not null);
+
+Table created.
+
+SQL> alter table test(email varchar2(20) unique, phone_number varchar2(15) unique);
+
+
+
+SQL> alter table test add(email varchar2(20) unique, phone_number varchar2(15) unique);
+
+Table altered.
+
+SQL> alter table test modify(phone_number varchar2(20));
+
+Table altered.
+
+SQL> alter table test column email;
+
+
+SQL> alter table test drop column email;
+
+Table altered.
+
+SQL> spool off
