@@ -1,0 +1,27 @@
+==================Create Trigger==============
+
+create or replace trigger EMP_AFTER_INSERT after insert on employees
+for each row
+
+declare
+begin
+insert into buck_employee values
+(:new.id, :new.name);
+
+dbms_output.put_line('record successfully inserted into buck_employee table');
+end;
+
+
+======================Trigger Update====================
+
+create or replace trigger EMP_AFTER_update after update on employees
+for each row
+
+declare
+begin
+update buck_employee 
+set id=:new.id, name=:new.name
+where id=old.id;
+
+dbms_output.put_line('record successfully inserted into buck_employee table');
+end;
