@@ -92,3 +92,8 @@ SQL> alter table test drop column email;
 Table altered.
 
 SQL> spool off
+
+
+ID, FIRST_NAME, LAST_NAME,STATUS,MONTHLY_SALARY,EMAIL,PHONE_NUMBER,dep_id
+---------- --------------- --------------- --------------- --------------
+                 JOIN_DATE END_DATE  CITY

@@ -1,0 +1,221 @@
+==================LIKE OPERATOR=======================
+			Page: 31 (Like operator)
+	------------------------------------------
+
+DECLARE
+PROCEDURE compare (value varchar2, pattern varchar2) is
+BEGIN
+	IF value LIKE pattern THEN
+		dbms_output.put_line ('True');
+	ELSE
+		dbms_output.put_line ('False');
+	END IF;
+END;
+BEGIN
+	compare('Zara Ali', 'Z%A_i');
+	compare('Nuha Ali', 'Z%A_i');
+END;
+
+==============BETWEEN OPERATOR=======================
+		  Page: 31 (Between operator)
+	-----------------------------------------
+DECLARE
+	x number(2) :=10;
+BEGIN
+	IF (x between 5 and 20) THEN
+		dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+	END IF;
+	
+	IF (x between 5 and 10) THEN
+	dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+		END IF;
+	IF (x between 11 and 20) THEN
+		dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+	END IF;
+END;
+
+================IN and NULL OPERATOR=======================
+		Page: 32 (IN and IS NULL Operator)
+	--------------------------------------------------
+DECLARE
+	letter varchar2 (1):= 'm';
+BEGIN
+	IF (letter in ('a', 'b', 'c')) THEN
+		dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+	END IF;
+	
+	IF (letter in ('m', 'n', 'o')) THEN
+		dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+	END IF;
+	
+	IF(letter is null) THEN
+		dbms_output.put_line('True');
+	ELSE
+		dbms_output.put_line('False');
+	END IF;
+END;
+
+================LOGICAL OPERATOR===================
+		   Page: 33 (Logical OPerators)
+	-------------------------------------------
+DECLARE
+	a boolean := true;
+	b boolean := false;
+BEGIN
+	IF (a and b) THEN
+		dbms_output.put_line('Line 1 - Condition is true');
+	END IF;
+	IF (a or b) THEN
+		dbms_output.put_line('Line 2 - Condition is true');
+	END IF;
+	IF (NOT a) THEN
+		dbms_output.put_line('Line 3 - a is not true');
+	ELSE
+		dbms_output.put_line('Line 3 - a is true');
+	END IF;
+	IF (NOT b) THEN
+		dbms_output.put_line('Line 4 - b is not true');
+	ELSE
+		dbms_output.put_line('Line 4 - b is true');
+	END IF;
+END;
+
+======================Precedence========================
+				Page: 34 (Precedence)
+		---------------------------------------
+DECLARE
+	a number(2) :=20;
+	b number(2) :=10;
+	c number(2) :=15;
+	d number(2) :=5;
+	e number(2) ;
+BEGIN
+	e:= (a+b)*c/d;
+	dbms_output.put_line(e);
+	
+	e:= ((a+b)*c)/d;
+	dbms_output.put_line(e);
+	
+	e:=(a + b)*(c / d);
+	dbms_output.put_line(e);
+	
+	e:= a+(b*c)/d;
+	dbms_output.put_line(e);
+END;
+
+
+==================CONDITION====================
+			Page: 37 (Example - 1)
+	-------------------------------------
+DECLARE
+	a number(2) :=10;
+BEGIN
+	a :=10;
+	IF (a<=20) THEN
+	dbms_output.put_line('a less than 20');
+	END IF;
+	dbms_output.put_line('Value of a is :' ||a);
+END;
+
+==================CONDITION====================
+			 IF THEN Statement
+			Page: 37 (Example - 2)
+	-------------------------------------
+DECLARE
+	c_id customers.id%type := 1;
+	c_sal customers.salary%type;
+BEGIN
+	SELECT salary
+	INTO c_sal
+	FROM customers
+	WHERE id=c_id;
+	IF(c_sal <=2000) THEN
+		UPDATE customers
+		SET salary = salary + 1000
+		    WHERE id = c_id;
+		dbms_output.put_line('Salary updated');
+	END IF;
+END;
+
+==================CONDITION====================
+		    IF THEN ELSE Statement
+				  Page: 39
+	-------------------------------------
+
+DECLARE
+	a number(3) :=100;
+BEGIN
+	IF (a<=20) THEN
+		dbms_output.put_line('a less than 20');
+	ELSE
+		dbms_output.put_line('a is not less than 20');
+	END IF;
+	dbms_output.put_line('Value of a is :' ||a);
+END;
+
+==================CONDITION====================
+		    IF THEN ELSEIF Statement
+				  Page: 40
+	-------------------------------------
+DECLARE
+		a number:= 100;
+BEGIN
+	IF(a=10) THEN
+		dbms_output.put_line('Value of a is 10');
+	ELSEIF (a=20) THEN
+		dbms_output.put_line('Value of a is 20');
+	ELSEIF (a=30) THEN
+		dbms_output.put_line('Value of a is 30');
+	ELSEIF 
+		dbms_output.put_line('None of the value is matching');
+	END IF;
+	dbms_output.put_line('Exact value of a is:' || a);
+END;
+/
+
+==================CASE====================
+		     CASE Statement
+				Page: 41
+	-----------------------------------
+
+DECLARE
+	grade char(1) :='A';
+BEGIN
+	CASE grade
+		when 'A' then dbms_output.put_line('Excellent');
+		when 'B' then dbms_output.put_line('Very good');
+		when 'C' then dbms_output.put_line('Well done');
+		when 'D' then dbms_output.put_line('You passed');
+		when 'F' then dbms_output.put_line('Better try again');
+		ELSE
+		dbms_output.put_line('No such grade');
+	END CASE;
+END;
+
+==================NESTED IF THEN ELSE====================
+		            CASE Statement
+				      Page: 43
+	      -----------------------------------
+DECLARE
+	a number(3) :=100;
+	b number(3) :=200;
+BEGIN
+	if (a = 100) THEN
+		IF(b = 200) THEN
+			dbms_output.put_line('Value of a is 100 and b is 200');
+		END IF;
+	END IF;
+	dbms_output.put_line('Exact Value of a is :' || a);
+	dbms_output.put_line('Exact Value of a is :' || b);
+END;
+		  
