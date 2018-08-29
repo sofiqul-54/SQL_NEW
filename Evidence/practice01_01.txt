@@ -1,0 +1,71 @@
+connect sys as sysdba
+
+create user abc identified by abc;
+grant dba to abc;
+
+=====================================================================================
+
+create table customer(
+	id number,
+	name varchar2 (20) not null,
+	mobile varchar2 (20) unique,
+	country varchar2 (20) default 'BD'
+	);
+
+======================================================================================	
+	
+create sequence cus_id_seq
+	start with 10
+	increment by 10
+	nocache
+	nocycle;
+
+	
+======================================================================================	
+create table customer_backup as select * from customer;
+
+======================================================================================
+
+CREATE or REPLACE TRIGGER customer_after_insert AFTER INSERT ON customer
+FOR EACH ROW
+DECLARE
+BEGIN
+insert into customer_backup values (:new.id, :new.name, :new.mobile, :new.country);
+DBMS_OUTPUT.PUT_LINE('Record successfully inserted into customer_backup table');
+END;
+
+=====================================================================================
+
+CREATE or REPLACE TRIGGER customer_after_update
+AFTER UPDATE ON customer
+FOR EACH ROW
+DECLARE
+BEGIN
+update customer_backup
+set name = :new.name, mobile = :new.mobile, country = :new.country;
+where id = :old.id;
+DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+END;
+
+======================================================================================
+
+CREATE or REPLACE TRIGGER customer_after_delete
+AFTER DELETE ON customer
+FOR EACH ROW
+DECLARE
+BEGIN
+Delete customer_backup
+where id = :old.id;
+DBMS_OUTPUT.PUT_LINE('Record successfully Deleted from customer table');
+END;
+
+
+========================================================================================
+
+insert into customer(id, name, mobile) values(cus_id_seq.nextval, 'Mostafiz', '01848-567000');
+
+
+============================================================================================
+update customer set name='Abdul Wadud' where id=10;
+
+

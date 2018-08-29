@@ -1,0 +1,253 @@
+SQL> connect sys as sysdba
+Connected.
+SQL> create user abc identified by abc;
+
+User created.
+
+SQL> grant dba to abc;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: abc
+Connected.
+SQL> create table customer(
+  2  id number,
+  3  name varchar2 (20) not null,
+  4  mobile varchar2 (20) unique,
+  5  country varchar2 (20) default "BD"
+  6  );
+country varchar2 (20) default "BD"
+                              *
+ERROR at line 5:
+ORA-00984: column not allowed here 
+
+
+SQL> create table customer(
+  2  id number,
+  3  name varchar2 (20) not null,
+  4  mobile varchar2 (20) unique,
+  5  country varchar2 (20) default 'BD'
+  6  );
+
+Table created.
+
+SQL> create table customer_backup as select * from customer;
+
+Table created.
+
+SQL> create sequence cus_id_seq
+  2  start with 10
+  3  increment by 10
+  4  nocache
+  5  nocycle;
+
+Sequence created.
+
+SQL> CREATE or REPLACE TRIGGER customer_after_insert AFTER INSERT ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  insert into customer_backup values (:new.id, :new.name, :new.mobile, :new.country);
+  6  DBMS_OUTPUT.PUT_LINE('Record successfully inserted into customer_backup table');
+  7  END;
+  8  /
+
+Trigger created.
+
+SQL> CREATE or REPLACE TRIGGER ucustomer_after_update
+  2  AFTER UPDATE ON customer
+  3  FOR EACH ROW
+  4  DECLARE
+  5  BEGIN
+  6  update customer_backup
+  7  set id = :new.id
+  8  where id = :old.id;
+  9  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+ 10  END;
+ 11  /
+
+Trigger created.
+
+SQL> CREATE or REPLACE TRIGGER customer_after_update
+  2  AFTER UPDATE ON customer
+  3  FOR EACH ROW
+  4  DECLARE
+  5  BEGIN
+  6  update customer_backup
+  7  set id = :new.id
+  8  where id = :old.id;
+  9  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+ 10  END;
+ 11  /
+
+Trigger created.
+
+SQL> CREATE or REPLACE TRIGGER customer_after_delete
+  2  AFTER DELETE ON customer
+  3  FOR EACH ROW
+  4  DECLARE
+  5  BEGIN
+  6  Delete customer_backup
+  7  where id = :old.id;
+  8  DBMS_OUTPUT.PUT_LINE('Record successfully Deleted from customer table');
+  9  END;
+ 10  /
+
+Trigger created.
+
+SQL> insert into customer(id, name, mobile, country) values(cus_id_seq.nextval, 'Azad', '01748-567000', 'Bangladesh');
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME                 MOBILE               COUNTRY                    
+---------- -------------------- -------------------- --------------------       
+        10 Azad                 01748-567000         Bangladesh                 
+
+SQL> select * from customer_backup;
+
+        ID NAME                 MOBILE               COUNTRY                    
+---------- -------------------- -------------------- --------------------       
+        10 Azad                 01748-567000         Bangladesh                 
+
+SQL> CREATE or REPLACE TRIGGER customer_after_update AFTER UPDATE ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  update customer_backup
+  6  set id = :new.id, name = :new.name, mobile = :new.mobile, country = :new.country;
+  7  where id = :old.id;
+  8  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+  9  END;
+ 10  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> drop customer_after_update;
+drop customer_after_update
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option 
+
+
+SQL> delete customer_after_update;
+delete customer_after_update
+       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> drop tigger customer_after_update;
+drop tigger customer_after_update
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option 
+
+
+SQL> delete tigger customer_after_update;
+delete tigger customer_after_update
+       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> update customer set name='Abdul Wadud' where id=10;
+update customer set name='Abdul Wadud' where id=10
+       *
+ERROR at line 1:
+ORA-04098: trigger 'ABC.CUSTOMER_AFTER_UPDATE' is invalid and failed 
+re-validation 
+
+
+SQL> insert into customer(id, name, mobile) values(cus_id_seq.nextval, 'Mostafiz', '01848-567000');
+
+1 row created.
+
+SQL> select * from customer;
+
+        ID NAME                 MOBILE               COUNTRY                    
+---------- -------------------- -------------------- --------------------       
+        10 Azad                 01748-567000         Bangladesh                 
+        20 Mostafiz             01848-567000         BD                         
+
+SQL> select * from customer_backup;
+
+        ID NAME                 MOBILE               COUNTRY                    
+---------- -------------------- -------------------- --------------------       
+        10 Azad                 01748-567000         Bangladesh                 
+        20 Mostafiz             01848-567000         BD                         
+
+SQL> drop trigger customer_after_update;
+
+Trigger dropped.
+
+SQL> CREATE or REPLACE TRIGGER customer_after_update AFTER UPDATE ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  update customer_backup
+  6  set id = :new.id, name = :new.name, mobile = :new.mobile, country = :new.country;
+  7  where id = :old.id;
+  8  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+  9  END;
+ 10  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> update customer set name='Abdul Wadud' where id=10;
+update customer set name='Abdul Wadud' where id=10
+       *
+ERROR at line 1:
+ORA-04098: trigger 'ABC.CUSTOMER_AFTER_UPDATE' is invalid and failed 
+re-validation 
+
+
+SQL> delete trigger customer_after_update;
+delete trigger customer_after_update
+       *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> drop trigger customer_after_update;
+
+Trigger dropped.
+
+SQL> select trigger_name from user_triggers;
+
+TRIGGER_NAME                                                                    
+------------------------------                                                  
+CUSTOMER_AFTER_DELETE                                                           
+UCUSTOMER_AFTER_UPDATE                                                          
+CUSTOMER_AFTER_INSERT                                                           
+
+SQL> CREATE or REPLACE TRIGGER customer_after_update AFTER UPDATE ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  update customer_backup
+  6  set name = :new.name, mobile = :new.mobile, country = :new.country;
+  7  where id = :old.id;
+  8  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+  9  END;
+ 10  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> CREATE or REPLACE TRIGGER customer_after_update
+  2  AFTER UPDATE ON customer
+  3  FOR EACH ROW
+  4  DECLARE
+  5  BEGIN
+  6  update customer_backup
+  7  set name = :new.name, mobile = :new.mobile, country = :new.country;
+  8  where id = :old.id;
+  9  DBMS_OUTPUT.PUT_LINE('Record successfully updated into customer table');
+ 10  END;
+ 11  /
+
+Warning: Trigger created with compilation errors.
+
+SQL> spool of;
