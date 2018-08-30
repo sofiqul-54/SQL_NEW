@@ -1,0 +1,48 @@
+create or replace procedure insertCustomer(
+	p_id in customer.id%type,
+	p_name in customer.name%type,
+	p_mobile in customer.mobile%type,
+	p_country in customer.country%type)
+	is
+	begin
+	insert into customer(id, name, mobile, country) values(p_id, p_name, p_mobile, p_country);
+	end;
+	/
+
+	
+begin
+insertCustomer(cus_id_seq.nextval, 'ABC', '01670-909299', 'Japan');
+end;
+/
+
+
+create or replace procedure updateCustomer(
+	p_id in customer.id%type,
+	p_name in customer.name%type,
+	p_mobile in customer.mobile%type,
+	p_country in customer.country%type)
+	is
+	begin
+	update customer set name=p_name, mobile=p_mobile, country=p_country where id=p_id;
+	end;
+	/
+
+
+begin
+updateCustomer(30, 'Mostafiz', '01670-000000', 'Pakistan');
+end;
+/
+
+
+create or replace procedure deletCustomer(
+	p_id in customer.id%type)
+	is
+	begin
+	delete from customer where id=p_id;
+	end;
+	/
+	
+begin
+deletCustomer(30);
+end;
+/
