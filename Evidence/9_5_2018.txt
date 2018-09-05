@@ -1,0 +1,48 @@
+
+connect sys as sysdba
+
+
+create user exam identified by exam;
+
+
+grant dba to exam;
+
+
+create table customer(id number(5) primary key, name varchar2(20) not null);
+
+
+create table customer_backup as select * from customer;
+
+
+CREATE or REPLACE TRIGGER customer_after_insert AFTER INSERT ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  insert into customer_backup values (:new.id, :new.name);
+  6  DBMS_OUTPUT.PUT_LINE('Record successfully inserted into customer_backup table');
+  7  END;
+  8  /
+
+
+
+create or replace procedure insertCustomer(
+  2  p_id in customer.id%type,
+  3  p_name in customer.name%type)
+  4  is
+  5  begin
+  6  insert into customer(id, name) values(p_id, p_name);
+  7  end;
+  8  /
+
+
+
+begin
+  2  insertCustomer(10, 'Azad');
+  3  end;
+  4  /
+
+
+
+select * from customer;
+
+select * from customer_backup;
