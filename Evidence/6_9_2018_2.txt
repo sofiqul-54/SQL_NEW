@@ -1,0 +1,17 @@
+CREATE or REPLACE TRIGGER customer_after_insert AFTER INSERT ON customer
+  2  FOR EACH ROW
+  3  DECLARE
+  4  BEGIN
+  5  insert into customer_backup values (:new.id, :new.name);
+  6  DBMS_OUTPUT.PUT_LINE('Record successfully inserted into customer_backup table');
+  7  END;
+  8  /
+
+create or replace TRIGGER department_after_insert after INSERT ON department
+FOR EACH ROW
+DECLARE
+BEGIN
+insert into department_backup values (:new.dep_id, :new:department_name);
+dbms_output.put_line ('Record successfully insert into department_backup table');
+end;
+ 
