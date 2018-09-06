@@ -1,0 +1,45 @@
+SQL> connect sys as sysdba
+Connected.
+SQL> create user exam01 identified by exam01;
+
+User created.
+
+SQL> grant dba to exam01;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: exam01
+Connected.
+SQL> create table department(dep_id number primary key, department_name varchar2 (30));
+
+Table created.
+
+SQL> create table department_backup as select * from department;
+
+Table created.
+
+SQL> create table employee(emp_id number primary key, emp_name varchar2 (30), mobile varchar2 (15) unique, salary number(7,2) check(salary>10000), jonining_date date default sysdate, country varchar2 (30) default 'BD', dep_id number constraint dip_emp_fk foreign key (dep_id) references department(dep_id));
+create table employee(emp_id number primary key, emp_name varchar2 (30), mobile varchar2 (15) unique, salary number(7,2) check(salary>10000), jonining_date date default sysdate, country varchar2 (30) default 'BD', dep_id number constraint dip_emp_fk foreign key (dep_id) references department(dep_id))
+                                                                                                                                                                                                                                    *
+ERROR at line 1:
+ORA-02253: constraint specification not allowed here 
+
+
+SQL> create table employee(emp_id number primary key, emp_name varchar2 (30), mobile varchar2 (15) unique, salary number(7,2) check(salary>10000), jonining_date date default sysdate, country varchar2 (30) default 'BD');
+
+Table created.
+
+SQL> create table employee_backup as select * from employee;
+
+Table created.
+
+SQL> create sequence dip_id_seq increment by 10 start with 10;
+
+Sequence created.
+
+SQL> create sequence emp_id_seq increment by 1 start with 100;
+
+Sequence created.
+
+SQL> spool off;
