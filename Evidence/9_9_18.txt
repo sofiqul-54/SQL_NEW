@@ -1,0 +1,87 @@
+create table department(
+			dep_id number(5) primary key,
+			department_name varchar2(30)
+			);
+			
+
+create table department_backup as select * from department;
+
+create table employee(
+		emp_id number primary key,
+		emp_name varchar2(30),
+		mobile varchar2(15) unique,
+		salary number(7,2) check(salary > 10000),
+		joining_date date default SYSDATE,
+		country varchar2(30) default 'BD',
+		dep_id number(5), constraint dep_emp_fk FOREIGN KEY (dep_id) REFERENCES department(dep_id) 
+		);
+
+create table employee_backup as select * from employee;
+
+describe department;
+
+describe employee;
+
+CREATE or REPLACE TRIGGER employee_after_insert AFTER INSERT ON employee
+FOR EACH ROW
+DECLARE
+BEGIN
+insert into employee_backup values(:new.emp_id, :new.emp_name, :new.mobile, :new.salary, :new.joining_date, :new.country, :new.dep_id);
+DBMS_OUTPUT.PUT_LINE('Record Successfully Inserted Into employee_backup Table');
+END;
+
+CREATE or REPLACE TRIGGER employee_after_update AFTER UPDATE on employee
+FOR EACH ROW
+DECLARE
+BEGIN
+update employee_backup
+set emp_name = :new.emp_name, mobile = :new.mobile, salary = :new.salary, joining_date = :new.joining_date, country = :new.country, dep_id = :new.dep_id 
+where emp_id = :old.emp_id;
+DBMS_OUTPUT.PUT_LINE('Record Successfully Updated Into employee_backup Table');
+END;
+
+
+CREATE or REPLACE TRIGGER employee_after_delete
+AFTER DELETE ON employee
+FOR EACH ROW
+DECLARE
+BEGIN
+Delete employee_backup
+where emp_id = :old.emp_id;
+DBMS_OUTPUT.PUT_LINE('Record Successfully Deleted From employee_backup Table');
+END;
+
+create sequence dep_id_seq increment by 10 start with 10;
+
+create sequence emp_id_seq increment by 1 start with 101;
+
+select sequence_name from user_sequences;
+
+select index_name from user_indexes;
+
+create index dep_name_idx on department(department_name);
+
+select index_name from user_indexes;
+
+CREATE OR REPLACE PROCEDURE insertDepertment(
+	p_id IN DEPARTMENT.dep_id%TYPE,
+	p_name IN DEPARTMENT.department_name%TYPE)
+	IS
+	BEGIN
+	INSERT INTO DEPARTMENT(dep_id, department_name)
+	VALUES(p_id, p_name);
+	END;
+
+BEGIN
+   insertDepertment(dep_id_seq.nextval,'ADMIN');
+END;
+
+BEGIN
+   insertDepertment(dep_id_seq.nextval,'SOFTWARE');
+END;
+
+BEGIN
+   insertDepertment(dep_id_seq.nextval,'MARKETING');
+END;
+
+

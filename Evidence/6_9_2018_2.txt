@@ -12,6 +12,6 @@ FOR EACH ROW
 DECLARE
 BEGIN
 insert into department_backup values (:new.dep_id, :new:department_name);
-dbms_output.put_line ('Record successfully insert into department_backup table');
+DBMS_OUTPUT.PUT_LINE('Record successfully insert into department_backup table');
 end;
  
