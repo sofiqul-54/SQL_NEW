@@ -1,4 +1,5 @@
-======================CHAPTER 9=====================
+===========================CHAPTER 9=====================
+-----------------------PL/SQL BASIC LOOP (Page : 45)-----------------
 DECLARE
 	x number :=10;
 BEGIN
@@ -11,3 +12,49 @@ BEGIN
 	END LOOP;
 	dbms_output.put_line('After Exit x is:' ||x);
 END;
+
+-----------------------PL/SQL BASIC LOOP (Page : 46)-----------------
+
+DECLARE
+	x number := 10;
+BEGIN
+	LOOP
+		dbms_output.put_line(x);
+		x :=x+10;
+		exit WHEN x > 50;
+	END LOOP;
+	dbms_output.put_line('After Exit x is:' || x);
+
+	
+-----------------------PL/SQL WHILE LOOP (Page : 46)-----------------
+
+DECLARE
+	a number:= 10;
+BEGIN
+	WHILE  a < 20 LOOP
+		dbms_output.put_line('Valu of a:' || a);
+		a := a+1;
+	END LOOP;
+END;
+
+-----------------------PL/SQL FOR LOOP (Page : 47)-----------------
+
+DECLARE
+	a number ;
+BEGIN
+	FOR a in 10 ..20 LOOP
+		dbms_output.put_line('Valu of a :' || a);
+	END LOOP;
+END;
+
+-----------------------PL/SQL REVERSE FOR LOOP (Page : 48)-----------------
+
+DECLARE
+	a number ;
+BEGIN
+	FOR a in reverse 1 ..10 LOOP
+		dbms_output.put_line('Valu of a :' || a);
+	END LOOP;
+END;
+
+-----------------------PL/SQL NESTED LOOP (Page : 49)-----------------

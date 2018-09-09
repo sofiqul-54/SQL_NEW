@@ -1,3 +1,5 @@
+=================================Question - 2 (A)==============================
+CREATE_TABLE:
 create table department(
 			dep_id number(5) primary key,
 			department_name varchar2(30)
@@ -6,6 +8,8 @@ create table department(
 
 create table department_backup as select * from department;
 
+=================================Question - 2 (B)==============================
+CREATE_TABLE:
 create table employee(
 		emp_id number primary key,
 		emp_name varchar2(30),
@@ -17,10 +21,14 @@ create table employee(
 		);
 
 create table employee_backup as select * from employee;
+=================================Question - 2 (C)==============================
+SHOW TABLE STRUCTRES:
 
 describe department;
 
 describe employee;
+=================================Question - 2 (D)==============================
+CREATE INSERT_TRIGGER:
 
 CREATE or REPLACE TRIGGER employee_after_insert AFTER INSERT ON employee
 FOR EACH ROW
@@ -29,6 +37,8 @@ BEGIN
 insert into employee_backup values(:new.emp_id, :new.emp_name, :new.mobile, :new.salary, :new.joining_date, :new.country, :new.dep_id);
 DBMS_OUTPUT.PUT_LINE('Record Successfully Inserted Into employee_backup Table');
 END;
+
+CREATE UPDATE_TRIGGER:
 
 CREATE or REPLACE TRIGGER employee_after_update AFTER UPDATE on employee
 FOR EACH ROW
@@ -40,7 +50,7 @@ where emp_id = :old.emp_id;
 DBMS_OUTPUT.PUT_LINE('Record Successfully Updated Into employee_backup Table');
 END;
 
-
+CREATE DELETE_TRIGGER:
 CREATE or REPLACE TRIGGER employee_after_delete
 AFTER DELETE ON employee
 FOR EACH ROW
@@ -51,17 +61,26 @@ where emp_id = :old.emp_id;
 DBMS_OUTPUT.PUT_LINE('Record Successfully Deleted From employee_backup Table');
 END;
 
+
+=================================Question - 3 (A)==============================
+CREATE SEQUENCE:
+
 create sequence dep_id_seq increment by 10 start with 10;
 
 create sequence emp_id_seq increment by 1 start with 101;
 
+SHOW CREATED SEQUENCE LIST:
 select sequence_name from user_sequences;
 
+SHOW INDEX:
 select index_name from user_indexes;
 
+CREATE INDEX:
 create index dep_name_idx on department(department_name);
 
 select index_name from user_indexes;
+
+CREATE INSERT PROCEDURE:
 
 CREATE OR REPLACE PROCEDURE insertDepertment(
 	p_id IN DEPARTMENT.dep_id%TYPE,
@@ -71,6 +90,8 @@ CREATE OR REPLACE PROCEDURE insertDepertment(
 	INSERT INTO DEPARTMENT(dep_id, department_name)
 	VALUES(p_id, p_name);
 	END;
+
+DATA INSERT BY PROCEDURE:
 
 BEGIN
    insertDepertment(dep_id_seq.nextval,'ADMIN');
@@ -85,3 +106,15 @@ BEGIN
 END;
 
 
+CREATE VIEW:
+create view depv as select dep_id, department_name from department;
+
+SHOW VIEW LIST:
+
+select view_name from user_viewes;
+
+ADD A COLUMN:
+ALTER TABLE employee ADD(email VARCHAR2(30) unique);
+
+CREATE SYNONYM:
+CREATE SYNONYM emp FOR SCOTT.EMP;
