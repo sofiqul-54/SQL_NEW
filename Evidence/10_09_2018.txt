@@ -1,0 +1,142 @@
+
+SQL*Plus: Release 11.2.0.2.0 Production on Mon Sep 10 09:00:54 2018
+
+Copyright (c) 1982, 2014, Oracle.  All rights reserved.
+
+SQL> connect
+Enter user-name: ied
+Enter password:
+Connected.
+SQL> create or replace procedure sqNum(x in out number) as
+  2  begin
+  3    x := x*x;
+  4  end;
+  5  /
+
+Procedure created.
+
+SQL> set serveroutput on;
+SQL> declare
+  2    c number := 4;
+  3  begin
+  4    sqNum (c);
+  5    dbms_output.put_line(c);
+  6  end;
+  7  /
+16
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION totalEmployees
+  2  RETURN number IS
+  3     total number(3) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM employees;
+  7     RETURN total;
+  8  END;
+  9  /
+
+Warning: Function created with compilation errors.
+
+SQL> connect
+Enter user-name: sys
+Enter password:
+ERROR:
+ORA-28009: connection as SYS should be as SYSDBA or SYSOPER
+
+
+Warning: You are no longer connected to ORACLE.
+SQL> connect sys as sysdba;
+Enter password:
+Connected.
+SQL> create user final identified by final
+  2  create user final identified by final;
+create user final identified by final
+*
+ERROR at line 2:
+ORA-00922: missing or invalid option
+
+
+SQL> create user final identified by final;
+
+User created.
+
+SQL> grant dba to final;
+
+Grant succeeded.
+
+SQL> connect
+Enter user-name: final
+Enter password:
+Connected.
+SQL> create table emp(eid number, ename varchar2(30), salary number(8,2), hire_date date, address varchar2(50));
+
+Table created.
+
+SQL> create table emp_backup as select * from emp;
+
+Table created.
+
+SQL> alter table emp add constraint emp_id_pk primary key(eid);
+
+Table altered.
+
+SQL> create or replace trigger emp_insert_after after insert on emp for each row declare begin insert into emp_backup values(:new.eid, :new.ename, :new.salary, :new.hire_date, :new.address);
+  2  DBMS_OUTPUT.PUT_LINE('Rcord Successfully Inserted Into emp_backup Table');
+  3  END;
+  4  /
+
+Trigger created.
+
+
+
+SQL> insert into emp(eid, ename, salary, hire_date, address) values (&eid, '&ename', &salary, '&date', '&address');
+Enter value for eid: 102
+Enter value for ename: aza
+Enter value for salary: 5000
+Enter value for date: 10/jun/1980
+Enter value for address: dhaka
+old   1: insert into emp(eid, ename, salary, hire_date, address) values (&eid, '&ename', &salary, '&date', '&address')
+new   1: insert into emp(eid, ename, salary, hire_date, address) values (102, 'aza', 5000, '10/jun/1980', 'dhaka')
+
+1 row created.
+
+SQL> alter table emp add(phone varchar2(15), job_title varchar2(20));
+
+Table altered.
+
+SQL>
+
+
+create or replace trigger emp_after_insert After insert on emp
+for each row
+declare
+begin
+insert into emp_backup values(:new.eid, :new.ename, :new.salary, :new.hire_date, :new.address, :new.phone, :new.job_title);
+DBMS_OUTPUT.PUT_LINE('Record Successfully Inserted into ');
+end;
+/
+
+CREATE OR REPLACE TRIGGER emp_after_update AFTER UPDATE ON emp
+FOR EACH ROW
+DECLARE
+BEGIN
+UPDATE emp_backup
+set ename=:new.ename, salary=:new.salary, hire_date=:new.hire_date, address=:new.address where eid=:old.eid;
+DBMS_OUTPUT.PUT_LINE('Record Successfully Updated to emp_backup table');
+END;
+
+create or replace trigger emp_after_delete after delete on emp
+for each row 
+declare
+begin
+delete from emp_backup
+where eid = :old.eid;
+dbms_output.put_line('Record successfully deleted from emp_backup');
+end;
+
+
+delete from emp where eid=102;
+
+
