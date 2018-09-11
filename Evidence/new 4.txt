@@ -1,0 +1,6 @@
+# create a table name emp_info with following columns requirments of emp_id(pk),
+emp_name, manager_id, phone, sex(check constraint), salary(default value).
+
+Ans: create table emp_info(emp_id number primary key, emp_name varchar2(30),
+manager_id number, phone varchar2(15), sex varchar2(10) check(sex in('Male','Female')),
+salary number(8,2) default 10000);
